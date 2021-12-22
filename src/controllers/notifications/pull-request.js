@@ -11,8 +11,11 @@ export const printData = async () => {
   console.log(...data.data);
 };
 
+let x;
 export const pullRequest = (req, res, next) => {
   console.log("res", res.data);
-  printData();
+  x = res.data;
+  console.log(x);
+  //   printData();
   res.send("in pullRequest");
 };
