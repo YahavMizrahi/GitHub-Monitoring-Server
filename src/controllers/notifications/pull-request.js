@@ -1,4 +1,4 @@
 export const pullRequest = (req, res, next) => {
-  console.log("yahav");
+  console.log("res");
   res.send("in pullRequest");
 };
