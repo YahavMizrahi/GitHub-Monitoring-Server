@@ -1,14 +1,14 @@
 import express from "express";
 
 const app = express();
-const PORT = process.env.port || 3001;
+const port = process.env.port || 3001;
 
 app.get("/", (req, res) => {
   res.send("Pull Request");
 });
 
-app.listen(PORT, () => {
+app.listen(port, () => {
   console.log(
-    "+++++++++++++++_SERVER_RUN_IN_PORT:_" + PORT + "+++++++++++++++"
+    "+++++++++++++++_SERVER_RUN_IN_PORT:_" + port + "+++++++++++++++"
   );
 });
