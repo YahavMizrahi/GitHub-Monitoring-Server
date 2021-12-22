@@ -17,5 +17,6 @@ export const pullRequest = (req, res, next) => {
   x = res.data;
   console.log(x);
   //   printData();
-  res.send("in pullRequest");
+  // res.send("in pullRequest");
+  res.send(200);
 };
