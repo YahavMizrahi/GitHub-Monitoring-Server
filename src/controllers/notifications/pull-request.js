@@ -13,14 +13,8 @@ export const printData = async () => {
 
 let x;
 export const pullRequest = (req, res, next) => {
-  if (req.headers["Content-Type"] == "application/json") {
-    data = req.json;
-    console.log(data);
-  }
-  console.log("res", res.data);
-  x = res.data;
-  console.log(x);
+  //   console.log("res", res.data);
+
   //   printData();
-  // res.send("in pullRequest");
-  res.end();
+  res.send(req.body);
 };
