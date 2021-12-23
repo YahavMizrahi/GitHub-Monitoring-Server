@@ -1,5 +1,5 @@
 import axios from "axios";
-import { addToDB } from "../../services/mongodb";
+// import { addToDB } from "../../services/mongodb";
 
 export const getPullRequestData = async () => {
   return await axios.get(
