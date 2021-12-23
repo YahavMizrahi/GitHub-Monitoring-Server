@@ -13,7 +13,9 @@ export const printData = async () => {
 
 let x;
 export const pullRequest = (req, res, next) => {
-  console.log("res", res.data);
+  //   console.log("res", req.data);
+  const payload = req.body;
+  console.log(payload);
 
   //   printData();
   res.send(req.body);
