@@ -39,7 +39,7 @@ export const addToDB = (pullReq) => {
     user_html_url: pullReq.user.url,
     repo_html_url: pullReq.repository.html_url,
     repoName: pullReq.repository.name,
-    repoName: pullReq.repository.id,
+    repoId: pullReq.repository.id,
   };
   const pullRequest = new pullReqData(pullData);
   pullRequest.save();
