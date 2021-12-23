@@ -6,7 +6,7 @@ export const getPullRequestData = async () => {
   );
 };
 
-export const printData = async () => {
+export const printData = async (req, res) => {
   //   const data = await getPullRequestData();
 
   //   console.log(...data.data);
