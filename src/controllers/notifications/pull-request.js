@@ -1,5 +1,6 @@
 import axios from "axios";
 // import { addToDB } from "../../services/mongodb";
+const { addPullReqToDB } = require("./firebase/config");
 
 export const getPullRequestData = async () => {
   return await axios.get(

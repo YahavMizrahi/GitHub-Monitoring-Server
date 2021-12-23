@@ -3,7 +3,6 @@ import { notifications } from "./src/routes/notifications.js";
 import { error } from "./src/routes/error.js";
 // import { dbURI } from "./src/services/mongodb.js";
 // import mongoose from "mongoose";
-const { addPullReqToDB } = require("./firebase/config");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
