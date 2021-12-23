@@ -1,6 +1,7 @@
-import express from "express";
+// import express from "express";
+const express = require('express')
 
-export const error = express.Router()
+const error = express.Router()
     .use('*', [
         (req, res, next) => {
             res.sendStatus(404);
@@ -9,3 +10,5 @@ export const error = express.Router()
             res.sendStatus(503);
         }
     ]);
+
+module.exports = { error }
