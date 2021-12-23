@@ -15,18 +15,17 @@ app.use(
   })
 );
 
-mongoose
-  .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => {
-    app.listen(PORT, () => {
-      console.log(`App listening at http://localhost:${PORT}`);
-    });
-    console.log("connected to DB");
-  })
-  .catch((err) => console.log("DB - ", err));
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+//   .then((result) => {
+//     app.listen(PORT, () => {
+//       console.log(`App listening at http://localhost:${PORT}`);
+//     });
+//     console.log("connected to DB");
+//   })
+//   .catch((err) => console.log("DB - ", err));
 
-// app.listen(PORT, () => {
-//   console.log(
-//     "+++++++++++++++_SERVER_RUN_IN_PORT:_" + PORT + "+++++++++++++++"
-//   );
-// });
+app.listen(PORT, () => {
+  console.log(
+    "+++++++++++++++_SERVER_RUN_IN_PORT:_" + PORT + "+++++++++++++++"
+  );
+});
