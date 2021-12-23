@@ -2,7 +2,7 @@ import express from "express";
 import { notifications } from "./src/routes/notifications.js";
 import { error } from "./src/routes/error.js";
 import { dbURI } from "./src/services/mongodb.js";
-import { mongoose } from "mongoose";
+// import { mongoose } from "mongoose";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
