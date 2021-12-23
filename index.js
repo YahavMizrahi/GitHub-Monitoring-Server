@@ -17,6 +17,7 @@ app.use(function (req, res, next) {
   error()
   next();
 });
+// app.use([notifications, error]);
 
 
 // mongoose
