@@ -8,13 +8,10 @@ export const getPullRequestData = async () => {
 
 export const printData = async (req, res) => {
   //   const data = await getPullRequestData();
+  console.log(res);
 
   //   console.log(...data.data);
   res.send("pull req list");
-};
-
-export const tryX = (req, res) => {
-  res.send("WHATTTTTTTTT");
 };
 
 export const pullRequest = (req, res, next) => {
