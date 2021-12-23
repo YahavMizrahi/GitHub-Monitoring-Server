@@ -18,5 +18,5 @@ export const pullRequest = (req, res, next) => {
   console.log(payload);
 
   //   printData();
-  res.send(req.body);
+  res.status.send(201);
 };
