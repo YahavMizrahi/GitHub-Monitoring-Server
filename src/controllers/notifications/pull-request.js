@@ -1,4 +1,5 @@
 import axios from "axios";
+import { addToDB } from "../../services/mongodb";
 
 export const getPullRequestData = async () => {
   return await axios.get(
@@ -8,13 +9,11 @@ export const getPullRequestData = async () => {
 
 export const printData = async (req, res) => {
   const data = await getPullRequestData();
-
-  //   console.log(...data.data);
   res.send(...data.data);
 };
 
 export const pullRequest = (req, res, next) => {
   const payload = req.body;
-  console.log(payload);
+  addToDB(payload);
   res.send(201);
 };
