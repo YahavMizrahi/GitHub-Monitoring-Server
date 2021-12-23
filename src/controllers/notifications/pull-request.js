@@ -14,6 +14,7 @@ export const printData = async (req, res) => {
 
 export const pullRequest = (req, res, next) => {
   const payload = req.body;
+  console.log(payload);
   //   addToDB(payload);
   res.send(201);
 };
