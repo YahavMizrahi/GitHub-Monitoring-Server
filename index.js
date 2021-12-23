@@ -16,7 +16,7 @@ app.use(
 );
 
 mongoose
-  .connect(dbURI)
+  .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => {
     app.listen(PORT, () => {
       console.log(`App listening at http://localhost:${PORT}`);
