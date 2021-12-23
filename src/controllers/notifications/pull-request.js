@@ -10,7 +10,7 @@ export const printData = async () => {
   const data = await getPullRequestData();
 
   console.log(...data.data);
-  res.send(data.data);
+  res.send(data.data.id);
 };
 
 let x;
