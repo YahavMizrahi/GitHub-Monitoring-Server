@@ -9,5 +9,5 @@ export const notifications = express
   .Router()
   .use("/notifications", [
     express.Router().post("/pull-request", pullRequest),
-    express.Router().get("/", printData),
+    express.Router().get("/", "Hello World"),
   ]);
