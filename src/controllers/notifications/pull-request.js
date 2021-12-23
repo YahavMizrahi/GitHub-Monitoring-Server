@@ -13,6 +13,10 @@ export const printData = async (req, res) => {
   res.send("pull req list");
 };
 
+export const tryX = (req, res) => {
+  res.send("WHATTTTTTTTT");
+};
+
 export const pullRequest = (req, res, next) => {
   //   console.log("res", req.data);
   const payload = req.body;
