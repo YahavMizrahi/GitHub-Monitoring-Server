@@ -7,13 +7,12 @@ export const getPullRequestData = async () => {
 };
 
 export const printData = async () => {
-  const data = await getPullRequestData();
+  //   const data = await getPullRequestData();
 
-  console.log(...data.data);
+  //   console.log(...data.data);
   res.send("pull req list");
 };
 
-let x;
 export const pullRequest = (req, res, next) => {
   //   console.log("res", req.data);
   const payload = req.body;
