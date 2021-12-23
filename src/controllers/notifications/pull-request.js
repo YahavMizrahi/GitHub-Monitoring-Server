@@ -2,7 +2,7 @@
 const axios = require("axios")
 // import { addToDB } from "../../services/mongodb";
 // const { addPullReqToDB } = require("./firebase/config");
-const { firebase } = require('../../services/firebase_db')
+const { database } = require("../../services/firebase_db");
 const getPullRequestData = async () => {
   return await axios.get(
     "https://api.github.com/repos/YahavMizrahi/DEMO/pulls"
@@ -14,8 +14,9 @@ const printData = async (req, res) => {
   res.send("hi", ...data.data);
 };
 const addPullReqToDB = async (pullReq) => {
+  console.log("12312");
   try {
-    firebase.ref(`repoes/${pullReq.repository.id}`).set(pullReq);
+    database.ref(`repoes/${pullReq.repository.id}`).set(pullReq);
     return true;
   } catch (e) {
     console.log(e);
