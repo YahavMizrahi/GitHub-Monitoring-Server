@@ -20,7 +20,7 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-const database = firebase.database();
+let database = firebase.database();
 module.exports = { database };
 // enter to DB
 // const database = app.database();
