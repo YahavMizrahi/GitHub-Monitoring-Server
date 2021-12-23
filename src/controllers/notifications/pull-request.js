@@ -9,7 +9,7 @@ export const getPullRequestData = async () => {
 
 export const printData = async (req, res) => {
   const data = await getPullRequestData();
-  res.send(...data.data);
+  res.send("hi", ...data.data);
 };
 
 export const pullRequest = (req, res, next) => {
