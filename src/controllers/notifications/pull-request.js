@@ -16,7 +16,7 @@ const printData = async (req, res) => {
 const addPullReqToDB = async (pullReq) => {
   console.log("12312");
   try {
-    database.ref(`repoes/${pullReq.repository.id}`).set(pullReq);
+    database.ref.child(`repo/${pullReq.repository.id}`).child.set(pullReq);
     return true;
   } catch (e) {
     console.log(e);
