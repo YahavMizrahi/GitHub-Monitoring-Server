@@ -1,13 +1,6 @@
-// Import the functions you need from the SDKs you need
-const firebase = require('firebase/app')
-const { getDatabase } = require("firebase/database");
+const firebase = require("firebase/app");
+const { getDatabase, ref, set } = require("firebase/database");
 
-// import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDNqcNEJyAQ6Qh9BUEWEfvIuGIvqk4fMyY",
   authDomain: "github-monitoring.firebaseapp.com",
@@ -18,13 +11,10 @@ const firebaseConfig = {
   appId: "1:657578439656:web:67267773b00ab2fb90aa5d",
   measurementId: "G-BLYV8S82FK",
 };
+
 const app = firebase.initializeApp(firebaseConfig);
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-const database = getDatabase(app);
-module.exports = { database };
-// enter to DB
-// const database = app.database();
-// const storageRef = firebase.storage().ref();
+const database = getDatabase();
 
+module.exports = { database, ref, set };
