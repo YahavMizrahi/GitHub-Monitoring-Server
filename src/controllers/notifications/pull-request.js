@@ -1,23 +1,12 @@
 const axios = require("axios");
 const { database, ref, set } = require("../../services/firebase_db");
 
-const getPullRequestData = async () => {
-  return await axios.get(
-    "https://api.github.com/repos/YahavMizrahi/DEMO/pulls"
-  );
-};
-
-const printData = async (req, res) => {
-  const data = await getPullRequestData();
-  res.send(res.data);
-};
-
-const addPullReqToDB = async (pullReq) => {
+const addPullReqToDB = async (pullReq, notifications) => {
   try {
     await set(
       ref(
         database,
-        `repo/${pullReq.repository.id}/pull_requests/${pullReq.pull_request.id}`
+        `repo/${pullReq.repository.id}/${notifications}/${pullReq.pull_request.id}`
       ),
       {
         pull_id: pullReq["pull_request"]["id"],
@@ -34,7 +23,7 @@ const addPullReqToDB = async (pullReq) => {
         user_html_url: pullReq["pull_request"]["user"]["url"],
         repo_html_url: pullReq["repository"]["html_url"],
         repoName: pullReq["repository"]["name"],
-        repoId: pullReq["repository"]["id"],
+        repo_id: pullReq["repository"]["id"],
       }
     );
     return true;
@@ -47,7 +36,7 @@ const addPullReqToDB = async (pullReq) => {
 const pullRequest = (req, res, next) => {
   const payload = req.body;
   console.log(payload);
-  addPullReqToDB(payload).then((response) => {
+  addPullReqToDB(payload, "pull-requests").then((response) => {
     if (!response) {
       res.status("404").send("err DB");
       return;
