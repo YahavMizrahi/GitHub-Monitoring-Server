@@ -31,7 +31,7 @@ const addPullReqToDB = async (pullReq) => {
         repo_html_url: pullReq["repository"]["html_url"],
         repoName: pullReq["repository"]["name"],
         repo_id: pullReq["repository"]["id"],
-        img_pull_url: getImgPull([pullReq["pull_request"]["html_url"]]),
+        img_pull_url: pullReq["img_pull_url"],
       }
     );
     return true;
@@ -70,19 +70,21 @@ const pullRequest = (req, res, next) => {
   };
   let payload = req.body;
   console.log(payload);
-  const x = async () => {
-    const img = await getImgPull(payload["pull_request"]["html_url"]);
-    payload = { ...payload, img_pull_url: img };
-    addPullReqToDB(payload).then((response) => {
-      if (!response) {
-        res.status("404").send("err DB");
-        return;
-      }
-      res.send(201);
-    });
-  };
-
-  next();
+  const img = getImgPull(payload["pull_request"]["html_url"]).then(
+    async (res) => {
+      payload = await { ...payload, img_pull_url: img };
+      addPullReqToDB(payload).then((response) => {
+        if (!response) {
+          res.status("404").send("err DB");
+          return;
+        }
+        res.send(201);
+      });
+      next();
+    }
+  );
 };
+
+
 
 module.exports = { pullRequest, getPullReqFromDB };
