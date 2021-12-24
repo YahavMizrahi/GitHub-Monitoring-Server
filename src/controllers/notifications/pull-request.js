@@ -1,12 +1,12 @@
 const axios = require("axios");
 const { database, ref, set } = require("../../services/firebase_db");
 
-const addPullReqToDB = async (pullReq, notifications) => {
+const addPullReqToDB = async (pullReq) => {
   try {
     await set(
       ref(
         database,
-        `repo/${pullReq.repository.id}/${notifications}/${pullReq.pull_request.id}`
+        `repo/${pullReq.repository.id}/pull-requests/${pullReq.pull_request.id}`
       ),
       {
         pull_id: pullReq["pull_request"]["id"],
@@ -33,10 +33,12 @@ const addPullReqToDB = async (pullReq, notifications) => {
   }
 };
 
+const get
+
 const pullRequest = (req, res, next) => {
   const payload = req.body;
   console.log(payload);
-  addPullReqToDB(payload, "pull-requests").then((response) => {
+  addPullReqToDB(payload).then((response) => {
     if (!response) {
       res.status("404").send("err DB");
       return;
