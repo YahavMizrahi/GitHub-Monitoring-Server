@@ -1,5 +1,10 @@
-const axios = require("axios");
-const { database, ref, set } = require("../../services/firebase_db");
+const {
+  database,
+  ref,
+  set,
+  get,
+  child,
+} = require("../../services/firebase_db");
 
 const addPullReqToDB = async (pullReq) => {
   try {
@@ -33,7 +38,22 @@ const addPullReqToDB = async (pullReq) => {
   }
 };
 
-const get
+const getPullReqFromDB = (req, res, next) => {
+  const dbRef = ref(database);
+  get(child(dbRef, `repo/`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const snap = snapshot.val();
+        const arrPullReq = [];
+        res.send(JSON.stringify(snap));
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+};
 
 const pullRequest = (req, res, next) => {
   const payload = req.body;
@@ -45,6 +65,7 @@ const pullRequest = (req, res, next) => {
     }
     res.send(201);
   });
+  next();
 };
 
-module.exports = { pullRequest, getPullRequestData, printData };
+module.exports = { pullRequest, getPullReqFromDB };
