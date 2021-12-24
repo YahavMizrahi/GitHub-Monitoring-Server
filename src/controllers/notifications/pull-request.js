@@ -95,8 +95,8 @@ const pullRequest = (req, res, next) => {
   //   );
   // });
 
-  await Promise.all([getPayload(), addPullReqToDB(payload)]);
-};;;
+  Promise.all([getPayload(), addPullReqToDB(payload)]);
+};
 
 
 
