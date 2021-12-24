@@ -50,7 +50,7 @@ const pullRequest = (req, res, next) => {
   addPullReqToDB(payload).then((response) => {
     if (!response) {
       console.log("err DB");
-      resStatus("404").send();
+      res.send("404");
       return;
     }
     res.send(201);
