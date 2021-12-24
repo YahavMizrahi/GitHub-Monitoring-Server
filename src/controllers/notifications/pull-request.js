@@ -5,6 +5,7 @@ const {
   get,
   child,
 } = require("../../services/firebase_db");
+const axios = require("axios");
 
 const addPullReqToDB = async (pullReq) => {
   try {
@@ -25,10 +26,13 @@ const addPullReqToDB = async (pullReq) => {
         created: pullReq["pull_request"]["created_at"],
         closed: pullReq["pull_request"]["closed_at"],
         avatarUserUrl: pullReq["pull_request"]["user"]["avatar_url"],
-        user_html_url: pullReq["pull_request"]["user"]["url"],
+        user_html_url: pullReq["pull_request"]["user"]["html_url"],
         repo_html_url: pullReq["repository"]["html_url"],
         repoName: pullReq["repository"]["name"],
         repo_id: pullReq["repository"]["id"],
+        pull_img: axios.get(
+          `https://shot.screenshotapi.net/screenshot?token=4RZW7ST-QGK42RJ-MCAQS8Y-26M15H3&url=${pullReq["pull_request"]["html_url"]}`
+        ),
       }
     );
     return true;
@@ -44,7 +48,6 @@ const getPullReqFromDB = (req, res, next) => {
     .then((snapshot) => {
       if (snapshot.exists()) {
         const snap = snapshot.val();
-        const arrPullReq = [];
         res.send(JSON.stringify(snap));
       } else {
         console.log("No data available");
