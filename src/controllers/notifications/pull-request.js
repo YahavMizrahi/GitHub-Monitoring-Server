@@ -69,10 +69,11 @@ const pullRequest = (req, res, next) => {
       });
   };
   let payload = req.body;
-  console.log(payload);
   const img = getImgPull(payload["pull_request"]["html_url"]).then(
     async (res) => {
       payload = await { ...payload, img_pull_url: img };
+      console.log(payload);
+
       addPullReqToDB(payload).then((response) => {
         if (!response) {
           res.status("404").send("err DB");
