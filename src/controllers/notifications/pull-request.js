@@ -31,7 +31,7 @@ const addPullReqToDB = async (pullReq) => {
         created: pullReq["pull_request"]["created_at"],
         closed: pullReq["pull_request"]["closed_at"],
         avatarUserUrl: pullReq["pull_request"]["user"]["avatar_url"],
-        user_html_url: pullReq["pull_request"]["user.url"],
+        user_html_url: pullReq["pull_request"]["user"]["url"],
         repo_html_url: pullReq["repository"]["html_url"],
         repoName: pullReq["repository"]["name"],
         repoId: pullReq["repository"]["id"],
