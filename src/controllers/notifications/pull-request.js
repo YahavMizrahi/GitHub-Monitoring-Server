@@ -30,9 +30,13 @@ const addPullReqToDB = async (pullReq) => {
         repo_html_url: pullReq["repository"]["html_url"],
         repoName: pullReq["repository"]["name"],
         repo_id: pullReq["repository"]["id"],
-        pull_img: axios.get(
-          `https://shot.screenshotapi.net/screenshot?token=4RZW7ST-QGK42RJ-MCAQS8Y-26M15H3&url=${pullReq["pull_request"]["html_url"]}`
-        ),
+        pull_img: axios
+          .get(
+            `https://shot.screenshotapi.net/screenshot?token=4RZW7ST-QGK42RJ-MCAQS8Y-26M15H3&url=${pullReq["pull_request"]["html_url"]}`
+          )
+          .then((res) => {
+            return res.data.screenshot;
+          }),
       }
     );
     return true;
