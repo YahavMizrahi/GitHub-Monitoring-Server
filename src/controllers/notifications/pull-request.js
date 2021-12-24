@@ -69,22 +69,22 @@ const pullRequest = (req, res, next) => {
       });
   };
   let payload = req.body;
-  const img = getImgPull(payload["pull_request"]["html_url"]).then(
-    async (res) => {
-      payload = await { ...payload, img_pull_url: img };
-      console.log(payload);
 
-      addPullReqToDB(payload).then((response) => {
+  getImgPull(payload["pull_request"]["html_url"]).then((res) => {
+    addPullReqToDB({ ...payload, img_pull_url: res.data.screenshot }).then(
+      (response) => {
         if (!response) {
           res.status("404").send("err DB");
           return;
         }
         res.send(201);
-      });
-      next();
-    }
-  );
-};
+      }
+    );
+  });
+
+  //   await Promise.all([addPullReqToDB({ ...payload, img_pull_url:getImgPull(payload["pull_request"]["html_url"])
+  // }), getImgPull(payload["pull_request"]["html_url"])()]);
+};;
 
 
 
