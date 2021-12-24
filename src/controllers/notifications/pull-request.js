@@ -68,7 +68,8 @@ const pullRequest = (req, res, next) => {
       });
   };
   let payload = req.body;
-  payload = { ...payload, img_pull_url: payload["pull_request"]["html_url"] };
+  const img = getImgPull(payload["pull_request"]["html_url"]);
+  payload = { ...payload, img_pull_url: img };
   console.log(payload);
   addPullReqToDB(payload).then((response) => {
     if (!response) {
