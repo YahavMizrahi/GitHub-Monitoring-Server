@@ -9,7 +9,7 @@ const getPullRequestData = async () => {
 
 const printData = async (req, res) => {
   const data = await getPullRequestData();
-  res.send("hi", ...data.data);
+  res.send(res.data);
 };
 const addPullReqToDB = async (pullReq) => {
   // const pullData = {
@@ -32,7 +32,7 @@ const addPullReqToDB = async (pullReq) => {
   try {
     set(
       ref(database, `repo/${pullReq.repository.id}/${pullReq.pull_request.id}`),
-      pullData
+      pullReq
     );
 
     // database.ref.child(`repo/${pullReq.repository.id}`).set(pullReq);
@@ -45,25 +45,9 @@ const addPullReqToDB = async (pullReq) => {
 
 const pullRequest = (req, res, next) => {
   const payload = req.body;
-  const pullData = {
-    pull_id: payload.pull_request.id,
-    number: payload.number,
-    title: payload.pull_request.title,
-    body: payload.pull_request.body,
-    action: payload.action,
-    pull_html_url: payload.pull_request.html_url,
-    user_name: payload.user.login,
-    user_id: payload.user.id,
-    created: payload.created_at,
-    closed: payload.closed_at,
-    avatarUserUrl: payload.user.avatar_url,
-    user_html_url: payload.user.url,
-    repo_html_url: payload.repository.html_url,
-    repoName: payload.repository.name,
-    repoId: payload.repository.id,
-  };
-  console.log(pullData);
-  addPullReqToDB(pullData).then((response) => {
+
+  console.log(payload);
+  addPullReqToDB(payload).then((response) => {
     if (!response) {
       console.log("err DB");
       resStatus("404").send();
