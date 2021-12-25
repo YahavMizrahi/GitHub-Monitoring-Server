@@ -4,8 +4,8 @@ const {
 } = require("../../services/firebase_db");
 const { screenshot } = require("../../services/util");
 
-const getPullRequest = (req, res) => {
-  const pulls = getDocument("repo");
+const getPullRequest = async (req, res) => {
+  const pulls = await getDocument("repo");
   console.log(123, pulls);
   if (pulls) {
     res.send(pulls);
