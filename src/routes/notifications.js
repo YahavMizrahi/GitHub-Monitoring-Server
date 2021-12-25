@@ -8,7 +8,7 @@ const {
 const notifications = express
   .Router()
   .use("/notifications", [
-    express.Router().get("/pull-requests", getPullRequest),
+    express.Router().get("/pull-requests1", getPullRequest),
     express.Router().post("/pull-requests", postPullRequest),
   ]);
 
