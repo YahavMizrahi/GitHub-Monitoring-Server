@@ -16,6 +16,7 @@ const getPullRequest = async (req, res) => {
 const postPullRequest = async (req, res) => {
   try {
     const payload = req.body;
+    console.log(payload);
     const { success, message } = await addPullReqToDB(payload);
     if (!success) throw message || "Error adding pull request to DB";
     res.send(201);
