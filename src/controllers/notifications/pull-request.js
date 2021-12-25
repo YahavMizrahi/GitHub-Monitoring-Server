@@ -31,7 +31,7 @@ const addPullReqToDB = async (pullReq) => {
         repo_html_url: pullReq["repository"]["html_url"],
         repoName: pullReq["repository"]["name"],
         repo_id: pullReq["repository"]["id"],
-        img_pull_url: pullReq["img_pull_url"],
+        // img_pull_url: pullReq["img_pull_url"],
       }
     );
     return true;
@@ -58,38 +58,15 @@ const getPullReqFromDB = (req, res, next) => {
 };
 
 const pullRequest = (req, res, next) => {
-  const getImgPull = async (url) => {
-    return await // screenshot_api.
-    axios
-      .get(
-        `https://shot.screenshotapi.net/screenshot?token=6NHFM97-V4NM40T-Q4ANTBQ-S0SP255=${url}`
-      )
-      .then(async (res) => {
-        return await res.data.screenshot;
-      });
-  };
-  let payload = req.body;
+  const payload = req.body;
 
-  async function addPullReq() {
-    payload = {
-      ...payload,
-      img_pull_url: await getImgPull(req.body["pull_request"]["html_url"]),
-    };
-    addPullReqToDB(payload)
-      .then((res) => {
-        res.send(201);
-      })
-      .catch((err) => {
-        err.send(404);
-      });
-  }
-
-  addPullReq();
-
- 
-
-
-
+  addPullReqToDB(payload)
+    .then((res) => {
+      res.send(201);
+    })
+    .catch((err) => {
+      err.send(404);
+    });
 };
 
 
