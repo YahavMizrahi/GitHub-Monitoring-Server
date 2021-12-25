@@ -17,4 +17,31 @@ const app = firebase.initializeApp(firebaseConfig);
 firebase.initializeApp(firebaseConfig);
 const database = getDatabase();
 
-module.exports = { database, ref, set, get, child };
+const getDocument = async (documentName) => {
+  try {
+    const dbRef = ref(database);
+    const snapshot = await get(child(dbRef, `${documentName}/`));
+
+    if (snapshot.exists()) {
+      const snap = snapshot.val();
+      return JSON.stringify(snap);
+    } else {
+      console.log("No data available");
+    }
+  } catch (e) {
+    return e;
+  }
+};
+
+const addItemToDocument = async (refUrl, item) => {
+  try {
+    const fbRef = ref(database, refUrl);
+
+    await set(fbRef, item);
+    return true;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+module.exports = { getDocument, addItemToDocument };

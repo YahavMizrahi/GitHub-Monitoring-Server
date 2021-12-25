@@ -1,15 +1,15 @@
 const express = require("express");
 
 const {
-  pullRequest,
-  getPullReqFromDB,
+  postPullRequest,
+  getPullRequest,
 } = require("../controllers/notifications/pull-request.js");
 
 const notifications = express
   .Router()
   .use("/notifications", [
-    express.Router().get("/pull-requests1", getPullReqFromDB),
-    express.Router().post("/pull-request", pullRequest),
+    express.Router().get("/pull-requests", getPullRequest),
+    express.Router().post("/pull-requests", postPullRequest),
   ]);
 
 module.exports = { notifications };

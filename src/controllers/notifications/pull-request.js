@@ -1,75 +1,68 @@
 const {
-  database,
-  ref,
-  set,
-  get,
-  child,
+  getDocument,
+  addItemToDocument,
 } = require("../../services/firebase_db");
-const axios = require("axios");
-const { async } = require("@firebase/util");
+const { screenshot } = require("../../services/util");
 
-const addPullReqToDB = async (pullReq) => {
+const getPullRequest = (req, res) => {
+  const pulls = getDocument("repo");
+  console.log(pulls);
+  if (pulls) {
+    res.send(pulls);
+  }
+  res.send(404);
+};
+
+const postPullRequest = async (req, res) => {
   try {
-    await set(
-      ref(
-        database,
-        `repo/${pullReq.repository.id}/pull-requests/${pullReq.pull_request.id}`
-      ),
-      {
-        pull_id: pullReq["pull_request"]["id"],
-        number: pullReq["number"],
-        title: pullReq["pull_request"]["title"],
-        body: pullReq["pull_request"]["body"],
-        action: pullReq["action"],
-        pull_html_url: pullReq["pull_request"]["html_url"],
-        user_name: pullReq["pull_request"]["user"]["login"],
-        user_id: pullReq["pull_request"]["user"]["id"],
-        created: pullReq["pull_request"]["created_at"],
-        closed: pullReq["pull_request"]["closed_at"],
-        avatarUserUrl: pullReq["pull_request"]["user"]["avatar_url"],
-        user_html_url: pullReq["pull_request"]["user"]["html_url"],
-        repo_html_url: pullReq["repository"]["html_url"],
-        repoName: pullReq["repository"]["name"],
-        repo_id: pullReq["repository"]["id"],
-        // img_pull_url: pullReq["img_pull_url"],
-      }
-    );
-    return true;
+    const payload = req.body;
+    const { success, message } = await addPullReqToDB(payload);
+    if (!success) throw message || "Error adding pull request to DB";
+    res.send(201);
   } catch (e) {
     console.log(e);
-    return null;
+    res.status(503);
   }
 };
 
-const getPullReqFromDB = (req, res, next) => {
-  const dbRef = ref(database);
-  get(child(dbRef, `repo/`))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        const snap = snapshot.val();
-        res.send(JSON.stringify(snap));
-      } else {
-        console.log("No data available");
-      }
-    })
-    .catch((error) => {
-      res.send(error);
-    });
+const addPullReqToDB = async (pullReq) => {
+  try {
+    const parsedPullReq = await parsePullRequest(pullReq);
+    const { repo_id, pull_id } = parsedPullReq;
+    const isAdded = await addItemToDocument(
+      `repo/${repo_id}/pull-requests/${pull_id}`,
+      parsedPullReq
+    );
+
+    return { success: isAdded };
+  } catch (e) {
+    console.log(e);
+    return { message: e.message };
+  }
 };
 
-const pullRequest = (req, res, next) => {
-  const payload = req.body;
+const parsePullRequest = async (pullReq) => {
+  const { repository = {}, pull_request = {}, number, action } = pullReq;
+  const pull_screen = await screenshot(pull_request["html_url"]);
 
-  addPullReqToDB(payload).then((response) => {
-    if (!response) {
-      res.status("404").send("Error adding pull request to DB");
-    }
-    console.log("COMMENT ADDED TO FIREBASE REALTIME");
-    res.send(201);
-  });
+  return {
+    pull_screen,
+    pull_id: pull_request["id"],
+    number,
+    title: pull_request["title"],
+    body: pull_request["body"],
+    action,
+    pull_html_url: pull_request["html_url"],
+    user_name: pull_request["user"]["login"],
+    user_id: pull_request["user"]["id"],
+    created: pull_request["created_at"],
+    closed: pull_request["closed_at"],
+    avatarUserUrl: pull_request["user"]["avatar_url"],
+    user_html_url: pull_request["user"]["html_url"],
+    repo_html_url: repository["html_url"],
+    repoName: repository["name"],
+    repo_id: repository["id"],
+  };
 };
 
-
-
-
-module.exports = { pullRequest, getPullReqFromDB };
+module.exports = { postPullRequest, getPullRequest };
