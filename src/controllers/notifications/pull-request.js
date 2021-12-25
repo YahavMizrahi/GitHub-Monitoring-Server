@@ -6,7 +6,7 @@ const { screenshot } = require("../../services/util");
 
 const getPullRequest = (req, res) => {
   const pulls = getDocument("repo");
-  console.log(pulls);
+  console.log(123, pulls);
   if (pulls) {
     res.send(pulls);
   }

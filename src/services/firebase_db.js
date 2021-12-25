@@ -24,7 +24,6 @@ const getDocument = async (documentName) => {
 
     if (snapshot.exists()) {
       const snap = snapshot.val();
-      console.log(snap);
       return JSON.stringify(snap);
     } else {
       console.log("No data available");
