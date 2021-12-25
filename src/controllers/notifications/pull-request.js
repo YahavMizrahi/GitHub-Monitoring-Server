@@ -65,7 +65,7 @@ const pullRequest = (req, res, next) => {
       res.send(201);
     })
     .catch((err) => {
-      err.status().send(404);
+      err.status("404").send("ERR DB");
     });
 };
 
