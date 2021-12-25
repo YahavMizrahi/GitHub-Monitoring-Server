@@ -60,14 +60,15 @@ const getPullReqFromDB = (req, res, next) => {
 const pullRequest = (req, res, next) => {
   const payload = req.body;
 
-  addPullReqToDB(payload)
-    .then((res) => {
-      res.send(201);
-    })
-    .catch((err) => {
-      err.status("404").send("ERR DB");
-    });
+  addPullReqToDB(payload).then((response) => {
+    if (!response) {
+      res.status("404").send("Error adding pull request to DB");
+    }
+    console.log("COMMENT ADDED TO FIREBASE REALTIME");
+    res.send(201);
+  });
 };
+
 
 
 
