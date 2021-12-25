@@ -65,7 +65,7 @@ const pullRequest = (req, res, next) => {
       res.send(201);
     })
     .catch((err) => {
-      err.send(404);
+      err.status().send(404);
     });
 };
 
